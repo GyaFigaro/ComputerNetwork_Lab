@@ -75,4 +75,15 @@ uint8_t ip_prefix_match(uint8_t *ipa, uint8_t *ipb)
 uint16_t checksum16(uint16_t *data, size_t len)
 {
     // TO-DO
+    uint32_t sum = 0;
+    uint16_t high, low;
+    for (int i = 0; i < len; i++){
+        sum += swap16(data[i]);
+    }
+    while (sum / 0x10000 != 0){
+        low = sum % 0x10000;
+        high = sum / 0x10000;
+        sum = high + low;
+    }
+    return - sum - 1;
 }
